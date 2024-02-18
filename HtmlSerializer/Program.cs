@@ -6,10 +6,17 @@ using System.Text.RegularExpressions;
 //var html =await Load("https://ultracode.education/");
 var html = File.ReadAllText(@"C:\\Users\\user1\\Documents\\ברכי\\תיכנות\\שנה א\\web\\html\\עוז והדר\\index.html");
 var cleanHtml = new Regex("\\n").Replace(html, "");
-cleanHtml = new Regex("\\r").Replace(cleanHtml, "");
 cleanHtml = new Regex("\\t").Replace(cleanHtml, "");
 var elementsSplit = new Regex("<([^<]*?)>").Split(cleanHtml).Where(e=>e.Length>0).ToArray();
 
+
+/*
+ אם התו > נמצא בתוך הטקסט של העמוד, הפונקציה שמחלקת לאוביקטים תתקל בבעיה
+ ותקלוט אותו כפתיחה של תגית - ישבש את כל החלוקה לאוביקטים
+ הקוד הבא מסדר את הבעיה בצורה הבאה:
+ מתבצעת השוואה בין הטקסט המקורי  לפני החלוקה לפי תוויות לבין החלוקה
+ ומוסיפה את התו > לכל שורה שהיא תוית
+ */
 int i = 0;
 string elementH;
 for (int j = 0; j < elementsSplit.Length; j++)
